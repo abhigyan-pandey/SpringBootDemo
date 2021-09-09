@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:security="http://www.w3.org/1999/xhtml"
+      xmlns:sec="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta charset="UTF-8">
+        <title>Customers-List</title>
+    </head>
+    <body>
+        <table>
+            <thead>
+                <tr>
+                    <th> <u> First Name </u> </th>
+                    <th> <u> Last Name  </u> </th>
+                    <th> <u> Email  </u> </th>
+                    <th sec:authorize="hasRole('ROLE_ADMIN')"> <u> Actions </u> </th>
+                </tr>
+            </thead>
+
+            <tbody>
+                <th:block  th:each="tempCustomer:${theCustomerList}">
+                    <tr>
+                        <td th:text="${tempCustomer.firstName}">  </td>
+                        <td th:text="${tempCustomer.lastName}">  </td>
+                        <td th:text="${tempCustomer.email}">  </td>
+
+                        <td sec:authorize="hasRole('ROLE_ADMIN')"> <a th:href="@{/customerUpdate(customerId=${tempCustomer.id})}"> Update   </a>   </td>
+
+                        <td sec:authorize="hasRole('ROLE_ADMIN')"> <a th:href="@{/customerDelete(customerId=${tempCustomer.id})}"
+                                onclick="if (!(confirm('Are you sure want to delete this Customer ?'))) return false">
+                            Delete   </a>   </td>
+                    </tr>
+
+                </th:block>
+
+
+            </tbody>
+        </table>
+    </body>
+</html>

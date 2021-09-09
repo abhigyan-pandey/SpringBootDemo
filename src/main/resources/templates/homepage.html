@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:security="http://www.w3.org/1999/xhtml"
+      xmlns:sec="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Homepage</title>
+    <link rel="stylesheet"
+          th:href="@{/css/login.css}">
+</head>
+
+<body>
+        <div class="login">
+            <h2>    <u>WELCOME TO THE ONLINE BOOK STORE </u>   </h2>
+        </div>
+
+        <div class="login2">
+            <a href="/showCustomerList"><b>Click here to view Customer List</b>   </a>
+        </div>
+
+        <div class="login3">
+            <a href="/showBookList"><b>Click here to view the Books List</b>   </a>
+        </div>
+
+        <div class="login3" sec:authorize="hasRole('ROLE_CUSTOMER')">
+            <a href="/addCustomerForm"><b>Click here to Register Yourself  </b>   </a>
+        </div>
+
+        <div class="login3" sec:authorize="hasRole('ROLE_ADMIN')">
+            <a href="/addCustomerForm"><b>Click here to Register a new User  </b>   </a>
+        </div>
+
+        <div class="login3" sec:authorize="hasRole('ROLE_ADMIN')">
+            <a href="/addBookForm"><b>Click here to Register a New Book </b>   </a>
+        </div>
+
+        <div class="login3" sec:authorize="hasRole('ROLE_ADMIN')">
+            <a href="/createIssue"><b>Click here to Create a New Issue </b>   </a>
+        </div>
+
+        <span sec:authorize="hasRole('ROLE_CUSTOMER')">
+            <a href="https://www.gmail.com" target="_blank">  Mail the Admin for Book Request </a>
+        </span>
+
+        <div class="logout">
+            <form th:action="@{/logout}">
+                <input type="submit" value="Logout">
+            </form>
+        </div>
+</body>
+</html>

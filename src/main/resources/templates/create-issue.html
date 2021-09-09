@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:security="http://www.w3.org/1999/xhtml"
+      xmlns:sec="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>customer-form</title>
+    <link rel="stylesheet"
+          th:href="@{/css/book-register-form.css}">
+</head>
+
+<body>
+<div id="wrapper">
+    <div id="header">
+        <h2> BOOK REGISTRATION FORM </h2>
+    </div>
+</div>
+
+<div>
+    <form th:action="@{/saveIssue}" method="post" th:object="${issue}">
+
+        <label class="inputlabels"> Customer Id : </label>
+        <input type="text" th:field="*{customerId}" class="inputboxes"/>
+        <br/>
+
+        <label class="inputlabels"> Book Id :  </label>
+        <input type="text" th:field="*{bookId}" class="inputboxes"/>
+        <br/>
+
+        <label class="submitlabels"> <input type="submit" value="Submit"/>    </label>
+
+    </form>
+
+</div>
+</body>
+
+</html>
