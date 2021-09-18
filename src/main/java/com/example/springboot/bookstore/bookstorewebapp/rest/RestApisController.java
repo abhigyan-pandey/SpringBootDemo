@@ -5,25 +5,21 @@ import com.example.springboot.bookstore.bookstorewebapp.dto.CustomerDto;
 import com.example.springboot.bookstore.bookstorewebapp.entity.Books;
 import com.example.springboot.bookstore.bookstorewebapp.entity.Customers;
 import com.example.springboot.bookstore.bookstorewebapp.exceptions.DataNotFoundException;
-import com.example.springboot.bookstore.bookstorewebapp.exceptions.ErrorResponse;
 import com.example.springboot.bookstore.bookstorewebapp.service.CustomerService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
-import java.util.logging.Logger;
-import java.util.stream.Collectors;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api")
 public class RestApisController
 {
-    private Logger logger= Logger.getLogger(RestApisController.class.getName()) ;
 
-    private CustomerService customerService ;
+
+    private final CustomerService customerService ;
 
     @Autowired
     public RestApisController(CustomerService customerService)
@@ -35,25 +31,26 @@ public class RestApisController
     private ModelMapper modelMapper ;
 
     @GetMapping("/books")
-    public List<BookDto> booksList()
+    public Optional<List<BookDto>> booksList()
     {
-        return customerService.findAllBooks().stream().map(books -> modelMapper.map(books, BookDto.class))
-                .collect(Collectors.toList());
+        return Optional.ofNullable(customerService.findAllBooks().stream().map(books -> modelMapper.map(books, BookDto.class))
+                .toList());
     }
 
     @GetMapping("/customers")
-    public List<CustomerDto> findAll()
+    public Optional<List<CustomerDto>> findAll()
     {
-        return customerService.findAllCustomer().stream().map(customers -> modelMapper.map(
+        return Optional.ofNullable(customerService.findAllCustomer().stream().map(customers -> modelMapper.map(
                 customers, CustomerDto.class))
-                .collect(Collectors.toList()) ;
+                .toList()) ;
     }
 
     @GetMapping("/customers/{customerId}")
     public ResponseEntity<CustomerDto> findcustomerById(@PathVariable int customerId)
     {
         Customers customers = customerService.findById(customerId) ;
-        if(customerId <0 || customers==null)
+        Optional<Customers> optionalCustomers = Optional.ofNullable(customers) ;
+        if(optionalCustomers.isEmpty())
         {
             throw new DataNotFoundException("No customer data with this ID in the DB") ;
         }
@@ -64,7 +61,8 @@ public class RestApisController
     public ResponseEntity<BookDto> findAllBooks(@PathVariable int bookId)
     {
         Books books = customerService.findBookId(bookId) ;
-        if(bookId < 0 || books == null)
+        Optional<Books> optionalBooks = Optional.ofNullable(books) ;
+        if(optionalBooks.isEmpty())
         {
             throw new DataNotFoundException("No book data with this ID in the DB") ;
         }

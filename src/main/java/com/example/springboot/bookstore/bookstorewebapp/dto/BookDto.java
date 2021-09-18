@@ -2,6 +2,16 @@ package com.example.springboot.bookstore.bookstorewebapp.dto;
 
 public class BookDto
 {
+    @Override
+    public String toString() {
+        return "BookDto{" +
+                "bookId=" + bookId +
+                ", bookName='" + bookName + '\'' +
+                ", bookPrice=" + bookPrice +
+                ", genre='" + genre + '\'' +
+                '}';
+    }
+
     private int bookId ;
 
     public int getBookId() {

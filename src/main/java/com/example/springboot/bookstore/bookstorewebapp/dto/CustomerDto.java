@@ -1,12 +1,21 @@
 package com.example.springboot.bookstore.bookstorewebapp.dto;
 
-import com.example.springboot.bookstore.bookstorewebapp.entity.Books;
-
 import java.util.List;
 
 public class CustomerDto
 {
     private int id ;
+
+    @Override
+    public String toString() {
+        return "CustomerDto{" +
+                "id=" + id +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", email='" + email + '\'' +
+                ", booksList=" + booksList +
+                '}';
+    }
 
     public int getId()
     {
@@ -20,20 +29,20 @@ public class CustomerDto
     private String firstName ;
     private String lastName ;
 
-    public List<Books> getBooksList() {
+    public List<BookDto> getBooksList() {
         return booksList;
     }
 
-    public void setBooksList(List<Books> booksList) {
+    public void setBooksList(List<BookDto> booksList) {
         this.booksList = booksList;
     }
 
     private String email ;
-    private List<Books> booksList ;
+    private List<BookDto> booksList ;
 
     public CustomerDto()
     {
-        System.out.println("Default Constructor Called");;
+        System.out.println("Default Constructor Called");
     }
 
     public String getFirstName() {

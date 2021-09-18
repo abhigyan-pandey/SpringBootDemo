@@ -4,19 +4,15 @@ import com.example.springboot.bookstore.bookstorewebapp.dto.BookDto;
 import com.example.springboot.bookstore.bookstorewebapp.dto.CustomerDto;
 import com.example.springboot.bookstore.bookstorewebapp.entity.Books;
 import com.example.springboot.bookstore.bookstorewebapp.entity.Customers;
-import com.example.springboot.bookstore.bookstorewebapp.entity.IssueId;
 import com.example.springboot.bookstore.bookstorewebapp.entity.Issues;
-import com.example.springboot.bookstore.bookstorewebapp.exceptions.ErrorResponse;
 import com.example.springboot.bookstore.bookstorewebapp.service.CustomerService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
@@ -51,6 +47,8 @@ public class CustomerController
                                             map(customers -> modelMapper.map(customers, CustomerDto.class))
                                             .collect(Collectors.toList()) ;
         model.addAttribute("theCustomerList",customerDtoList) ;
+        String message = customerDtoList.stream().map(Object::toString).collect(Collectors.joining(", ")) ;
+        logger.log(Level.INFO,message);
         return "customer-list-view" ;
     }
 
@@ -61,6 +59,8 @@ public class CustomerController
                                     .map(books -> modelMapper.map(books,BookDto.class))
                                     .collect(Collectors.toList());
         model.addAttribute("theBookList",bookDtoList) ;
+        String message = bookDtoList.stream().map(Object::toString).collect(Collectors.joining(", ")) ;
+        logger.log(Level.INFO,message);
         return "book-list-view" ;
     }
 

@@ -1,9 +1,8 @@
 package com.example.springboot.bookstore.bookstorewebapp.entity;
 
-import org.springframework.web.bind.annotation.GetMapping;
-
 import javax.persistence.*;
 import java.util.List;
+import java.util.logging.Logger;
 
 @Entity
 @Table(name = "customers")
@@ -84,7 +83,6 @@ public class Customers
 
     public Customers()
     {
-        System.out.println("Default Constructor Called");
     }
 
     @Override

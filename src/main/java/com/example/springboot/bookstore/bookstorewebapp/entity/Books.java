@@ -1,7 +1,7 @@
 package com.example.springboot.bookstore.bookstorewebapp.entity;
 
 import javax.persistence.*;
-import java.util.List;
+import java.util.logging.Logger;
 
 @Entity
 @Table(name = "books")
@@ -61,6 +61,5 @@ public class Books
 
     public Books()
     {
-        System.out.println("Default Constructor Called");
     }
 }
