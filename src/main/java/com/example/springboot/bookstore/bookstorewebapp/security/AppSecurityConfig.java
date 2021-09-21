@@ -7,7 +7,6 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.core.userdetails.User;
 
 import javax.sql.DataSource;
 
@@ -20,11 +19,6 @@ public class AppSecurityConfig extends WebSecurityConfigurerAdapter
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception
     {
-        /* User.UserBuilder userBuilder = User.withDefaultPasswordEncoder() ;
-        auth.inMemoryAuthentication()
-        .withUser(userBuilder.username("abhi").password("Abhi@276").roles("CUSTOMER"))
-        .withUser(userBuilder.username("admin").password("Admin@276").roles("ADMIN")); */
-        System.out.println(dataSource.getConnection());
         auth.jdbcAuthentication().dataSource(dataSource)
                 .usersByUsernameQuery("select username, password, enabled from users where username=?")
                 .authoritiesByUsernameQuery("select username, authority from authorities where username=?");
@@ -33,17 +27,20 @@ public class AppSecurityConfig extends WebSecurityConfigurerAdapter
     @Override
     protected void configure(HttpSecurity http) throws Exception
     {
-        http.authorizeRequests().antMatchers(HttpMethod.GET,"/api/customers/**").permitAll()
-                .antMatchers(HttpMethod.GET,"/api/books/**").permitAll()
-                .antMatchers(HttpMethod.GET,"/api/customers/**").permitAll()
-                .antMatchers(HttpMethod.POST,"/api/books/**").hasRole("ADMIN")
-                .antMatchers(HttpMethod.POST,"/api/customers/**").permitAll()
-                .antMatchers(HttpMethod.PUT,"/api/customers/**").permitAll()
-                .antMatchers(HttpMethod.PUT,"/api/books/**").permitAll()
-                .antMatchers(HttpMethod.DELETE,"/api/books/**").hasRole("ADMIN")
-                .antMatchers(HttpMethod.DELETE,"/api/customers/**").hasRole("ADMIN")
+        String bookApi = "/api/books/**" ;
+        String customerApi = "/api/customers/**" ;
+        String admin ="ADMIN" ;
+        http.authorizeRequests().antMatchers(HttpMethod.GET,customerApi).permitAll()
+                .antMatchers(HttpMethod.GET,bookApi).permitAll()
+                .antMatchers(HttpMethod.GET,customerApi).permitAll()
+                .antMatchers(HttpMethod.POST,bookApi).hasRole(admin)
+                .antMatchers(HttpMethod.POST,customerApi).permitAll()
+                .antMatchers(HttpMethod.PUT,customerApi).permitAll()
+                .antMatchers(HttpMethod.PUT,bookApi).permitAll()
+                .antMatchers(HttpMethod.DELETE,bookApi).hasRole(admin)
+                .antMatchers(HttpMethod.DELETE,customerApi).hasRole(admin)
                 .anyRequest()
-                .hasAnyRole("ADMIN","CUSTOMER" )
+                .hasAnyRole(admin,"CUSTOMER" )
                 .and()
                 .httpBasic()
                 .and()

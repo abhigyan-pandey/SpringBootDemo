@@ -5,6 +5,7 @@ import com.example.springboot.bookstore.bookstorewebapp.dto.CustomerDto;
 import com.example.springboot.bookstore.bookstorewebapp.entity.Books;
 import com.example.springboot.bookstore.bookstorewebapp.entity.Customers;
 import com.example.springboot.bookstore.bookstorewebapp.entity.Issues;
+import com.example.springboot.bookstore.bookstorewebapp.exceptions.DataNotFoundException;
 import com.example.springboot.bookstore.bookstorewebapp.service.CustomerService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -75,7 +76,6 @@ public class CustomerController
     @PostMapping("/saveCustomer")
     public String saveCustomer(@ModelAttribute("customer") Customers customers)
     {
-        logger.info("HERE THIS WILL UPDATED "+customers);
         customerService.saveCustomer(customers);
         return "redirect:/" ;
     }
@@ -101,7 +101,7 @@ public class CustomerController
         Customers customers = customerService.findById(Id) ;
         if(customers == null)
         {
-            throw new RuntimeException("No respective is Id there is the DB");
+            throw new DataNotFoundException("No respective is Id there is the DB");
         }
         customerService.deleteCustomer(Id);
         return  "redirect:/" ;
@@ -128,8 +128,6 @@ public class CustomerController
             throw new RuntimeException("No respective is Id there is the DB");
         }
         model.addAttribute("customer",customers) ;
-        logger.info("The model attribute is "+customers);
-        logger.info(customers.getClass().getName());
         return  "customer-register-form";
     }
 
@@ -139,10 +137,9 @@ public class CustomerController
         Books books = customerService.findBookId(Id) ;
         if(books == null)
         {
-            throw new RuntimeException("No respective is Id there is the DB");
+            throw new DataNotFoundException("No respective is Id there is the DB");
         }
         model.addAttribute("book",books) ;
-        logger.info("The model attribute is "+books);
         return  "book-register-form";
     }
 
