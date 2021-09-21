@@ -24,5 +24,11 @@ public class Books
     @Column(name = "genre")
     private String genre ;
 
+    public Books(String bookName, int bookPrice, String genre) {
+        this.bookName = bookName;
+        this.bookPrice = bookPrice;
+        this.genre = genre;
+    }
+
     public Books() {}
 }

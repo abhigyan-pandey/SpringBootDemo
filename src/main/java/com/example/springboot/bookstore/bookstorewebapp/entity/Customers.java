@@ -1,11 +1,9 @@
 package com.example.springboot.bookstore.bookstorewebapp.entity;
 
 import lombok.Data;
-import lombok.Getter;
 
 import javax.persistence.*;
 import java.util.List;
-import java.util.logging.Logger;
 
 @Entity
 @Table(name = "customers")
@@ -38,6 +36,14 @@ public class Customers {
     private List<Books> booksList ;
 
     public Customers() {}
+
+    public Customers(String firstName, String lastName, List<Books> booksList, String email)
+    {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.booksList = booksList;
+        this.email = email;
+    }
 
     @Column(name = "email")
     private String email ;

@@ -7,17 +7,14 @@ import org.hibernate.Session;
 import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 import java.util.List;
-import java.util.logging.Logger;
 
 @Repository
 public class SampleDaoImpl implements SampleDao
 {
-    private EntityManager entityManager ;
-    private Logger logger = Logger.getLogger(SampleDaoImpl.class.getName()) ;
+    private final EntityManager entityManager ;
 
     @Autowired
     public SampleDaoImpl(EntityManager entityManager1)
@@ -30,9 +27,7 @@ public class SampleDaoImpl implements SampleDao
     {
         Session session = entityManager.unwrap(Session.class) ;
         Query<Customers> query = session.createQuery("from Customers order by firstName", Customers.class) ;
-        List<Customers> samplesList = query.getResultList() ;
-        logger.info("SIZE OF LIST IS "+samplesList.size());
-        return samplesList ;
+        return query.getResultList() ;
     }
 
     @Override
@@ -40,18 +35,14 @@ public class SampleDaoImpl implements SampleDao
     {
         Session session = entityManager.unwrap(Session.class) ;
         Query<Books> query = session.createQuery("from Books order by bookName", Books.class) ;
-        List<Books> samplesList = query.getResultList() ;
-        logger.info("SIZE OF LIST IS "+samplesList.size());
-        return samplesList ;
+        return query.getResultList() ;
     }
 
     @Override
     public Customers findById(int customerId)
     {
         Session session =entityManager.unwrap(Session.class) ;
-        Customers customers =session.get(Customers.class,customerId) ;
-        logger.info("IN FIND ID FUNCTION "+customers);
-        return customers ;
+        return session.get(Customers.class,customerId) ;
     }
 
     @Override
@@ -72,8 +63,7 @@ public class SampleDaoImpl implements SampleDao
     public Books findbookID(int bookId)
     {
         Session session =entityManager.unwrap(Session.class) ;
-        Books books =session.get(Books.class,bookId) ;
-        return books;
+        return session.get(Books.class,bookId) ;
     }
 
     @Override
@@ -98,7 +88,6 @@ public class SampleDaoImpl implements SampleDao
     public void saveCustomer(Customers customers)
     {
         Session session = entityManager.unwrap(Session.class) ;
-        logger.info("This customer will be updated"+customers);
         session.saveOrUpdate(customers);
     }
 

@@ -28,7 +28,7 @@ public class BookDto
 
     public BookDto()
     {
-        System.out.println("Default Constructor Caled");
+        //  Default Constructor
     }
 
     public String getBookName() {
