@@ -1,6 +1,7 @@
 package com.example.springboot.bookstore.bookstorewebapp;
 
 import com.example.springboot.bookstore.bookstorewebapp.dao.SampleDao;
+import com.example.springboot.bookstore.bookstorewebapp.dao.SampleDaoImpl;
 import com.example.springboot.bookstore.bookstorewebapp.entity.Books;
 import com.example.springboot.bookstore.bookstorewebapp.entity.Customers;
 import org.junit.jupiter.api.Assertions;
@@ -20,7 +21,7 @@ import java.util.List;
 class BookstorewebappApplicationTests
 {
 	@Mock
-	private SampleDao sampleDao ;
+	private SampleDaoImpl sampleDao ;
 
 	@Test
 	void find_All_Customers_Test()
