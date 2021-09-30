@@ -18,6 +18,8 @@ public interface SampleDao
     public void deleteBook(int bookId) ;
     public void saveCustomer(Customers customers);
     public void saveBook(Books books) ;
+    public Customers saveCustomer(Customers customers ,int customerid) ;
+    public Books saveBook(Books books ,int bookid) ;
 
     void saveIssue(Issues issues);
 }

@@ -16,6 +16,8 @@ public interface CustomerService
     public void addnewBooks(Books books) ;
     public void deleteCustomer(int customerId) ;
     public void deleteBook(int bookId) ;
+    public Customers saveCustomer(Customers customers , int customerid) ;
+    public Books saveBook(Books books,int bookid) ;
     public void saveCustomer(Customers customers) ;
     public void saveBook(Books books) ;
     public void saveIssue(Issues issues) ;

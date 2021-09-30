@@ -67,6 +67,16 @@ public class CustomerServiceImpl implements CustomerService
     }
 
     @Override
+    public Customers saveCustomer(Customers customers, int customerid) {
+        return sampleDao.saveCustomer(customers,customerid);
+    }
+
+    @Override
+    public Books saveBook(Books books, int bookid) {
+       return sampleDao.saveBook(books,bookid);
+    }
+
+    @Override
     public void saveCustomer(Customers customers)
     {
         sampleDao.saveCustomer(customers);

@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
+import java.awt.print.Book;
 import java.util.List;
 
 @Repository
@@ -96,6 +97,30 @@ public class SampleDaoImpl implements SampleDao
     {
         Session session = entityManager.unwrap(Session.class) ;
         session.saveOrUpdate(books);
+    }
+
+    @Override
+    public Customers saveCustomer(Customers customers, int customerid) {
+        Session session = entityManager.unwrap(Session.class) ;
+        Customers originalCustomer = findById(customerid) ;
+        originalCustomer.setFirstName(customers.getFirstName());
+        originalCustomer.setLastName(customers.getLastName());
+        originalCustomer.setEmail(customers.getEmail());
+        session.save(originalCustomer);
+        customers.setId(originalCustomer.getId());
+        return customers ;
+    }
+
+    @Override
+    public Books saveBook(Books books, int bookid) {
+        Session session = entityManager.unwrap(Session.class) ;
+        Books books1 = findbookID(bookid) ;
+        books1.setBookName(books.getBookName());
+        books1.setBookPrice(books.getBookPrice());
+        books1.setGenre(books.getGenre());
+        session.saveOrUpdate(books1);
+        books.setBookId(books1.getBookId());
+        return books ;
     }
 
     @Override

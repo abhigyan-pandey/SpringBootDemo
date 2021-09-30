@@ -17,8 +17,6 @@ import java.util.Optional;
 @RequestMapping("/api")
 public class RestApisController
 {
-
-
     private final CustomerService customerService ;
 
     @Autowired
@@ -86,11 +84,17 @@ public class RestApisController
         return books ;
     }
 
-    @PutMapping("/books")
-    public Books updateBooks(@RequestBody Books books)
+    @PutMapping("/books/{bookId}")
+    public Books updateBooks(@PathVariable  int bookId , @RequestBody Books books)
     {
-        customerService.saveBook(books);
+        customerService.saveBook(books,bookId);
         return books ;
+    }
+
+    @PutMapping("/customers/{customerId}")
+    public Customers updateCustomers(@PathVariable  int customerId , @RequestBody Customers customers)
+    {
+         return customerService.saveCustomer(customers , customerId);
     }
 
     @DeleteMapping("/customers/{customerId}")
@@ -104,7 +108,6 @@ public class RestApisController
         customerService.deleteCustomer(customerId);
         return ("Deleted the customer with ID ==" +customerId );
     }
-
 
     @DeleteMapping("/books/{bookId}")
     public String deleteBooks(@PathVariable int bookId)
